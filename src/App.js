@@ -1,25 +1,35 @@
-import logo from './logo.svg';
+import { useEffect, useState } from 'react';
 import './App.css';
+import { getCurrentWeatherByCity } from './api';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+function WeatherComponent(props){
+    return(
+        <></>
+    );
 }
 
-export default App;
+function MainWeatherDashboard({weatherObject}){
+    return(
+        <div className='main-dashboard-container'>
+            <h3>{weatherObject.condition.text}</h3>
+            <img src={weatherObject.condition.icon} alt={weatherObject.condition.text} />
+            <div class="weather-data-container"></div>
+
+        </div>
+    );
+}
+
+function App() {
+    const [weatherObject, setWeatherObject] = useState(0);
+
+    useEffect(() => {
+        getCurrentWeatherByCity("Mar del Plata")
+        .then((data) => {setWeatherObject(data)})
+        .catch((error) => {console.log(error)});
+    }, []);
+    return (
+    < MainWeatherDashboard  />
+    );
+  }
+  
+  export default App;
